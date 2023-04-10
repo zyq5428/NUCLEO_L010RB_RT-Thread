@@ -23,8 +23,8 @@ void user_alarm_callback(rt_alarm_t alarm, time_t timestamp)
     if ( sec < (u_int8_t)(60 / MINUTE_TIMESLICE) )
         sec++;
     else {
-        /* 释放信号量 */
-        rt_sem_release(rtc_sem);
+        /* 发送事件 */
+        rt_event_send(rtc_event, EVENT_FLAG3);
         sec = 0;
     }
 }

@@ -19,8 +19,8 @@
 #define DBG_LVL DBG_LOG
 #include <ulog.h>
 
-/* 指向信号量的指针 */
-rt_sem_t rtc_sem = RT_NULL;
+/* 指向事件集的指针 */
+rt_event_t rtc_event = RT_NULL;
 
 /* 消息队列控制块 */
 struct rt_messagequeue mq;
@@ -31,8 +31,8 @@ int main(void)
 {
     rt_err_t    result;
 
-    /* 创建一个动态信号量，初始值是 0 */
-    rtc_sem = rt_sem_create("rtc_sem", 0, RT_IPC_FLAG_PRIO);
+    /* 创建一个事件集 */
+    rtc_event = rt_event_create("rtc_event", RT_IPC_FLAG_PRIO);
 
     /* 初始化消息队列 */
     result = rt_mq_init(&mq,

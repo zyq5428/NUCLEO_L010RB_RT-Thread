@@ -19,6 +19,7 @@ static rt_thread_t tid = RT_NULL;
 /* 线程的入口函数 */
 static void gy30_entry(void *parameter)
 {
+    rt_uint32_t recv;
     rt_err_t result = RT_EOK;
     rt_uint8_t cnt = 0;
     uint16_t lux = 0;
@@ -39,7 +40,9 @@ static void gy30_entry(void *parameter)
             cnt = 0;
 
         /* 永久方式等待信号量 */
-        result = rt_sem_take(rtc_sem, RT_WAITING_FOREVER);
+        result = rt_event_recv(rtc_event, (EVENT_FLAG3 | EVENT_FLAG5),
+                RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,
+                RT_WAITING_FOREVER, &recv);
         if (result != RT_EOK)
         {
             LOG_D("take a semaphore, failed.");

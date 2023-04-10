@@ -22,8 +22,12 @@ typedef enum TASK_Name {
     TASK_CCOUNT
 } TASK_Name;
 
-/* 指向信号量的指针 */
-extern rt_sem_t rtc_sem;
+#define EVENT_FLAG3 (1 << 3)
+#define EVENT_FLAG5 (1 << 5)
+
+/* 指向事件集的指针 */
+extern rt_event_t rtc_event;
+
 /* 消息队列控制块 */
 extern struct rt_messagequeue mq;
 
